@@ -33,23 +33,20 @@ const NutritionLogger = ({ nutritionData, userId, onSuccess, onError }) => {
 
       console.log('Log entry created:', logEntry);
 
-      // Get reference to the user's document
-      const userDocRef = doc(db, 'users', userId.trim());
+      // Get reference to the user's document and foodLogs collection
+      const foodLogsRef = collection(db, 'users', userId.trim(), 'foodLogs');
       
-      // Get reference to the nutrition subcollection
-      const nutritionCollectionRef = collection(userDocRef, 'nutritiondata');
+      // Add the document to the foodLogs collection
+      const docRef = await addDoc(foodLogsRef, logEntry);
       
-      // Add the document to the subcollection
-      const docRef = await addDoc(nutritionCollectionRef, logEntry);
-      
-      console.log('Nutrition log added with ID: ', docRef.id);
+      console.log('Food log added with ID: ', docRef.id);
       if (onSuccess) {
         onSuccess(docRef.id);
       }
       
       return docRef.id;
     } catch (error) {
-      console.error('Error adding nutrition log: ', error);
+      console.error('Error adding food log: ', error);
       if (onError) {
         onError(error);
       }
