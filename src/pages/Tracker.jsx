@@ -199,13 +199,13 @@ function TrackerPage() {
         )}
 
         {/* Totals */}
-        <div className="mb-4 p-4 bg-white rounded-lg shadow-sm">
-          <h2 className="text-lg font-semibold mb-2">Totals</h2>
+        <div className="mb-4 p-4 bg-orange-400 rounded-lg shadow-sm">
+          <h2 className="text-lg text-white font-semibold mb-2">Totals</h2>
           <ul className="space-y-1">
-            <li className="text-sm text-gray-700">Calories: {calculateTotals().calories.toFixed(2)} / {goals.calories} kcal</li>
-            <li className="text-sm text-gray-700">Protein: {calculateTotals().protein.toFixed(2)} / {goals.protein} g</li>
-            <li className="text-sm text-gray-700">Carbs: {calculateTotals().carbs.toFixed(2)} / {goals.carbs} g</li>
-            <li className="text-sm text-gray-700">Fat: {calculateTotals().fat.toFixed(2)} / {goals.fat} g</li>
+            <li className="text-sm text-white">Calories: {calculateTotals().calories.toFixed(2)} / {goals.calories} kcal</li>
+            <li className="text-sm text-white">Protein: {calculateTotals().protein.toFixed(2)} / {goals.protein} g</li>
+            <li className="text-sm text-white">Carbs: {calculateTotals().carbs.toFixed(2)} / {goals.carbs} g</li>
+            <li className="text-sm text-white">Fat: {calculateTotals().fat.toFixed(2)} / {goals.fat} g</li>
           </ul>
         </div>
 
@@ -214,7 +214,7 @@ function TrackerPage() {
         {error && <p className="text-red-500 text-sm">{error}</p>}
         <ul className="space-y-3">
           {foodLogs.map((log) => (
-            <li key={log.id} className="p-4 border rounded-lg bg-white shadow-sm">
+            <li key={log.id} className="p-4 border border-orange-400 rounded-lg bg-white shadow-sm">
               <p className="font-medium">{log.name}</p>
               <p className="text-sm text-gray-500">
                 {new Date(log.timestamp).toLocaleString()} {/* Parse ISO string to display */}
