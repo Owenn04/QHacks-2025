@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 const Sidebar = ({ isOpen, setIsOpen }) => {
  const menuItems = [
    { title: 'Home', path: '/' },
-   { title: 'Camera', path: '/camera' },
+   { title: 'Scan Label', path: '/camera' },
    { title: 'Add Meal', path: '/addmeal' },
-   { title: 'Tracker', path: '/tracker' },
+   { title: 'History', path: '/tracker' },
    { title: 'Profile', path: '/profile' },
  ];
 

@@ -47,7 +47,7 @@ function Profile() {
             </div>
 
             <div className="space-y-4">
-              <div className="border-t pt-4">
+              <div className="border-t pt-4 border-orange-400">
                 <h3 className="text-lg font-medium mb-2">Account Details</h3>
                 <div className="space-y-2">
                   <p className="flex justify-between">
