@@ -44,7 +44,7 @@ function AddMeal() {
   // Parse the food description to extract nutritional details
   const parseNutrition = (description) => {
     const nutrition = {};
-    const cleanedDescription = description.replace(/Per\s+\d+\s*(g|serving|x)?\s*-?\s*/i, "");
+    const cleanedDescription = description.replace(/^.*Calories:/i, "Calories:");
     const parts = cleanedDescription.split("|");
     
   
@@ -79,7 +79,7 @@ function AddMeal() {
 
       await addDoc(collection(db, `users/${user.user.uid}/foodLogs`), {
         ...adjustedNutrition,
-        timestamp: serverTimestamp(),
+        timestamp: new Date().toISOString(),
       });
 
       setSelectedFood(null);
