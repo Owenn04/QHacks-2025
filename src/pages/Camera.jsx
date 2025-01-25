@@ -30,7 +30,9 @@ const CameraPage = () => {
 
   const handleLogSuccess = (docId) => {
     console.log('Successfully logged nutrition data with ID:', docId);
-    // You could show a success message here
+    // Clear the analysis and parsed nutrition after successful save
+    setAnalysis('');
+    setParsedNutrition(null);
   };
 
   const handleLogError = (error) => {
@@ -80,12 +82,12 @@ const CameraPage = () => {
             },
             {
               type: "text",
-              text: `Analyze this nutrition label. First, identify what food item this is - if you can find the product name use that, if not describe what type of food it appears to be (e.g. "potato chips", "protein bar", etc). If you can't determine the food type, use "Unknown Food Item". Then provide the nutritional values for ${servings} servings, with just the number (no units): calories in kcal, fat in grams, carbs in grams, protein in grams. Format exactly like this example:
-name: chocolate chip protein bar
-calories: 200
-fat: 10
-carbs: 25
-protein: 15`
+              text: `Analyze this nutrition label and return ONLY these values for ${servings} servings in exactly this format with no additional text or explanations:
+name: [product name]
+calories: [number]
+fat: [number]
+carbs: [number]
+protein: [number]`
             }
           ]
         }]

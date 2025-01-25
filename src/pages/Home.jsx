@@ -38,18 +38,22 @@ function Home() {
           setGoals(goalsDoc.data());
         }
 
-        // Get today's date at midnight for comparison
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
+        // Create precise date range for today
+        const now = new Date();
+        const startOfDayISO = now.toISOString().split('T')[0];
         
-        // Fetch today's nutrition entries
-        const nutritionRef = collection(db, 'users', user.user.uid, 'nutritiondata');
+        const foodLogsRef = collection(db, 'users', user.user.uid, 'foodLogs');
         const q = query(
-          nutritionRef, 
-          where('timestamp', '>=', today.toISOString()),
+          foodLogsRef,
+          where('timestamp', '>=', `${startOfDayISO}T00:00:00.000Z`),
+          where('timestamp', '<', `${startOfDayISO}T23:59:59.999Z`),
           orderBy('timestamp', 'desc')
         );
+
+        console.log('Fetching items from:', startOfDayISO);
+        
         const querySnapshot = await getDocs(q);
+        console.log('Query returned:', querySnapshot.size, 'items');
 
         // Calculate totals and store items
         const totals = {
@@ -59,18 +63,31 @@ function Home() {
           fat: 0
         };
 
-        const items = [];
-
-        querySnapshot.forEach((doc) => {
+        const items = querySnapshot.docs.map((doc) => {
           const data = doc.data();
-          totals.calories += Number(data.calories) || 0;
-          totals.protein += Number(data.protein) || 0;
-          totals.carbs += Number(data.carbs) || 0;
-          totals.fat += Number(data.fat) || 0;
           
-          items.push(data);
+          // Safely parse string values to floats
+          const safeParseFloat = (val) => {
+            const parsed = parseFloat(val);
+            return isNaN(parsed) ? 0 : parsed;
+          };
+
+          // Add macros using safeParseFloat
+          totals.calories += safeParseFloat(data.calories);
+          totals.protein += safeParseFloat(data.protein);
+          totals.carbs += safeParseFloat(data.carbs);
+          totals.fat += safeParseFloat(data.fat);
+          
+          return {
+            ...data,
+            calories: safeParseFloat(data.calories),
+            protein: safeParseFloat(data.protein),
+            carbs: safeParseFloat(data.carbs),
+            fat: safeParseFloat(data.fat)
+          };
         });
 
+        console.log('Final totals:', totals);
         setTodayItems(items);
         setTodayTotals(totals);
         setIsLoading(false);

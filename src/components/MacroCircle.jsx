@@ -1,4 +1,4 @@
-const MacroCircle = ({ calories, goal, type, color = "border-orange-400" }) => {
+const MacroCircle = ({ calories, goal, type }) => {
   // Calculate percentage filled (0-100)
   const percentage = Math.min((calories / goal) * 100, 100);
   
@@ -20,7 +20,7 @@ const MacroCircle = ({ calories, goal, type, color = "border-orange-400" }) => {
             r="88"
             fill="none"
             strokeWidth="8"
-            className={`stroke-current ${color.replace('border', 'text')} transition-all duration-500 ease-out`}
+            className="stroke-current text-orange-400 transition-all duration-500 ease-out"
             strokeDasharray={`${percentage * 5.52} 552`}
           />
         </svg>
