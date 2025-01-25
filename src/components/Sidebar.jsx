@@ -6,6 +6,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
    { title: 'Home', path: '/' },
    { title: 'Scan Label', path: '/camera' },
    { title: 'Add Meal', path: '/addmeal' },
+   { title: 'Goals', path: '/goals' },
    { title: 'History', path: '/tracker' },
    { title: 'Profile', path: '/profile' },
  ];
