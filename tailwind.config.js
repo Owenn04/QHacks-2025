@@ -13,6 +13,14 @@ export default {
       },
       width: {
         screen: '414px',
+      },
+      extend: {
+        colors: {
+          orange: {
+            400: '#FF9F43'
+          },
+          offwhite: '#FAFAFA'
+        }
       }
     },
     plugins: [],
