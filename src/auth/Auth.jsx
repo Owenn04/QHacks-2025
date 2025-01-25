@@ -1,5 +1,5 @@
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { doc, setDoc, getDoc,collection, getFirestore } from 'firebase/firestore'; 
+import { doc, setDoc, getDoc, collection, getFirestore } from 'firebase/firestore'; 
 import { auth, db } from '../firebase';
 
 const provider = new GoogleAuthProvider();

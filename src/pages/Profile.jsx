@@ -11,7 +11,7 @@ function Profile() {
     try {
       await auth.signOut(); // Sign out the user using Firebase auth
       setUser(null); // Clear the user from context
-      navigate('/login'); // Redirect to the login page after logout
+      navigate('/welcome'); // Redirect to the login page after logout
     } catch (error) {
       console.error('Logout failed:', error);
     }
