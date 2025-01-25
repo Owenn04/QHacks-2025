@@ -44,12 +44,14 @@ function AddMeal() {
   // Parse the food description to extract nutritional details
   const parseNutrition = (description) => {
     const nutrition = {};
-    const cleanedDescription = description.replace("Per 100g - ", "");
+    const cleanedDescription = description.replace(/Per\s+\d+\s*(g|serving|x)?\s*-?\s*/i, "");
     const parts = cleanedDescription.split("|");
     
   
     parts.forEach((part) => {
       const [key, value] = part.split(":").map((item) => item.trim());
+      console.log(key);
+      console.log(value);
       if (key && value) {
         const numericValue = parseFloat(value.replace(/[^0-9.]/g, ""));
         if (!isNaN(numericValue)) {
@@ -136,9 +138,6 @@ function AddMeal() {
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
             <div className="bg-white rounded-lg p-6 w-full max-w-md">
               <h2 className="text-xl font-semibold mb-2">{selectedFood.food_name}</h2>
-              <p className="text-sm text-gray-500 mb-4">
-                {selectedFood.food_description || "No description available"}
-              </p>
               <div className="mt-4">
                 <h3 className="text-lg font-semibold">Nutritional Information</h3>
                 <ul className="mt-2 space-y-1">
