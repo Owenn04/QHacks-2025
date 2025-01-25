@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { initializeAuth, getCurrentUser } from './auth/auth';
+import { initializeAuth, getCurrentUser } from './auth/Auth.jsx';
 import { useEffect, useState, createContext } from 'react';
 
 import Home from './pages/Home.jsx';

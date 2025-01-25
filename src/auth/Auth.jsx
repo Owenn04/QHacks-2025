@@ -1,5 +1,5 @@
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { doc, setDoc, collection, getFirestore } from 'firebase/firestore'; 
+import { doc, setDoc, getDoc,collection, getFirestore } from 'firebase/firestore'; 
 import { auth, db } from '../firebase';
 
 const provider = new GoogleAuthProvider();
@@ -9,12 +9,16 @@ export const getCurrentUser = () => auth.currentUser;
 export const initializeAuth = (callback) => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        await setDoc(doc(db, "users", user.uid), {
-          email: user.email,
-          name: user.displayName,
-          createdAt: new Date()
-        }, { merge: true });
-  
+        const userDocRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+        // Only create a new document if the user doesn't already exist
+        if (!userDoc.exists()) {
+          await setDoc(userDocRef, {
+            email: user.email,
+            name: user.displayName,
+            createdAt: new Date()
+          });
+        }
         callback?.(user);
       } else {
         callback?.(null);

@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../App';
-import { loginWithGoogle } from '../auth/auth';
+import { loginWithGoogle } from '../auth/Auth.jsx';
 
 const Login = () => {
   const user = useContext(UserContext);
