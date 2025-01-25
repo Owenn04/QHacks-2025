@@ -78,7 +78,7 @@ const Goals = () => {
                     name="calories"
                     value={goals.calories}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-lg"
+                    className="w-full px-4 py-3 border border-orange-400 rounded-lg text-lg"
                     min="0"
                     step="50"
                   />
@@ -102,7 +102,7 @@ const Goals = () => {
                         name="protein"
                         value={goals.protein}
                         onChange={handleChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                        className="w-full px-4 py-2 border border-orange-400 rounded-lg"
                         min="0"
                       />
                       <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">g</span>
@@ -119,7 +119,7 @@ const Goals = () => {
                         name="carbs"
                         value={goals.carbs}
                         onChange={handleChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                        className="w-full px-4 py-2 border border-orange-400 rounded-lg"
                         min="0"
                       />
                       <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">g</span>
@@ -136,7 +136,7 @@ const Goals = () => {
                         name="fat"
                         value={goals.fat}
                         onChange={handleChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                        className="w-full px-4 py-2 border border-orange-400 rounded-lg"
                         min="0"
                       />
                       <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">g</span>
