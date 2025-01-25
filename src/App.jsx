@@ -10,6 +10,7 @@ import AddMeal from './pages/AddMeal.jsx';
 import Tracker from './pages/Tracker.jsx';
 import Profile from './pages/Profile.jsx';
 import Welcome from './pages/Welcome.jsx';
+import Goals from './pages/Goals.jsx'
 
 import { ProtectedRoute } from './auth/ProtectedRoute';
 
@@ -54,6 +55,11 @@ function App() {
           <Route path="/tracker" element={
             <ProtectedRoute>
               <Tracker />
+            </ProtectedRoute>
+          } />
+          <Route path="/goals" element={
+            <ProtectedRoute>
+              <Goals />
             </ProtectedRoute>
           } />
           <Route path="/profile" element={
