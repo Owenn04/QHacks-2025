@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from "react";
 import Header from "../components/Header";
 import axios from "axios";
+import { db } from "../firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { UserContext } from "../App";
 
 function AddMeal() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [selectedFood, setSelectedFood] = useState(null); // Track the selected food item
+  const [selectedFood, setSelectedFood] = useState(null);
+  const [servings, setServings] = useState(1);
+  const user = useContext(UserContext);
 
   const fetchResults = async () => {
     setLoading(true);
     setError("");
-    setSelectedFood(null); // Clear the selected food when performing a new search
 
     try {
       const response = await axios.get("http://localhost:5000/api/fatsecret", {
@@ -20,9 +24,7 @@ function AddMeal() {
       });
       console.log("Proxy Response:", response.data); // Log the response
 
-      // Check if the response contains the expected data
       if (response.data.foods && response.data.foods.food) {
-        // Ensure the food data is always an array
         const foodData = Array.isArray(response.data.foods.food)
           ? response.data.foods.food
           : [response.data.foods.food];
@@ -39,24 +41,57 @@ function AddMeal() {
     }
   };
 
+  // Parse the food description to extract nutritional details
+  const parseNutrition = (description) => {
+    const nutrition = {};
+    const cleanedDescription = description.replace("Per 100g - ", "");
+    const parts = cleanedDescription.split("|");
+    
+  
+    parts.forEach((part) => {
+      const [key, value] = part.split(":").map((item) => item.trim());
+      if (key && value) {
+        const numericValue = parseFloat(value.replace(/[^0-9.]/g, ""));
+        if (!isNaN(numericValue)) {
+          nutrition[key.trim().toLowerCase()] = numericValue;
+        }
+      }
+    });
+  
+    return nutrition;
+  };
+
+  // Log the selected food item to Firestore
+  const logFoodItem = async () => {
+    if (!selectedFood) return;
+
+    try {
+      const nutrition = parseNutrition(selectedFood.food_description);
+      const adjustedNutrition = {
+        name: selectedFood.food_name, // Log the name of the food item
+        calories: (parseFloat(nutrition.calories) * servings).toFixed(2),
+        fat: (parseFloat(nutrition.fat) * servings).toFixed(2),
+        carbs: (parseFloat(nutrition.carbs) * servings).toFixed(2),
+        protein: (parseFloat(nutrition.protein) * servings).toFixed(2),
+      };
+
+      await addDoc(collection(db, `users/${user.user.uid}/foodLogs`), {
+        ...adjustedNutrition,
+        timestamp: serverTimestamp(),
+      });
+
+      setSelectedFood(null);
+      setServings(1);
+    } catch (error) {
+      console.error("Error logging food item:", error);
+    }
+  };
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (query.trim()) {
       fetchResults();
     }
-  };
-
-  // Parse the food description to extract nutritional details
-  const parseNutrition = (description) => {
-    const nutrition = {};
-    const parts = description.split("|");
-    parts.forEach((part) => {
-      const [key, value] = part.split(":");
-      if (key && value) {
-        nutrition[key.trim().toLowerCase()] = value.trim();
-      }
-    });
-    return nutrition;
   };
 
   return (
@@ -96,7 +131,7 @@ function AddMeal() {
           ))}
         </ul>
 
-        {/* Modal for Nutritional Details */}
+        {/* Selected Food Modal */}
         {selectedFood && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
             <div className="bg-white rounded-lg p-6 w-full max-w-md">
@@ -116,11 +151,48 @@ function AddMeal() {
                   )}
                 </ul>
               </div>
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Number of Servings
+                </label>
+                <input
+                  type="text"
+                  value={servings === 0 ? "" : servings} // Show empty string if servings is 0
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === "" || /^\d*\.?\d*$/.test(value)) {
+                      setServings(value === "" ? 0 : value); // Set to 0 if empty, otherwise keep as string
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (
+                      e.key === "Backspace" ||
+                      e.key === "Delete" ||
+                      e.key === "ArrowLeft" ||
+                      e.key === "ArrowRight" ||
+                      e.key === "."
+                    ) {
+                      return;
+                    }
+                    // Prevent non-numeric input
+                    if (isNaN(Number(e.key))) {
+                      e.preventDefault();
+                    }
+                  }}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                />
+              </div>
               <button
                 className="mt-4 w-full py-2 bg-orange-400 text-white rounded-lg"
-                onClick={() => setSelectedFood(null)} // Close the modal
+                onClick={logFoodItem}
               >
-                Close
+                Add to History
+              </button>
+              <button
+                className="mt-2 w-full py-2 bg-gray-300 text-gray-700 rounded-lg"
+                onClick={() => setSelectedFood(null)}
+              >
+                Cancel
               </button>
             </div>
           </div>
