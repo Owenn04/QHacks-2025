@@ -1,11 +1,16 @@
 
-import React from 'react'
+import React, { useContext } from 'react'
 import MacroCircle from '../components/MacroCircle'
 import MacroBar from '../components/MacroBar'
 import MealItem from '../components/MealItem'
 import Header from '../components/Header'
 
+import { UserContext } from '../App';
+
 function Home() {
+  const user = useContext(UserContext);
+  console.log('User:', user);
+
   return (
     <div className="min-h-screen bg-offwhite">
       <Header />
