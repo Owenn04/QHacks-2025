@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { initializeAuth, getCurrentUser } from './auth/Auth.jsx';
+import { initializeAuth, getCurrentUser, handleRedirectResult } from './auth/Auth.jsx';
 import { useEffect, useState, createContext } from 'react';
 
 import Home from './pages/Home.jsx';
@@ -23,18 +23,34 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = initializeAuth((currentUser) => {
-      setUser(currentUser ?? null);
-      setLoading(false);
-    });
-  
-    return unsubscribe;
+    const processAuth = async () => {
+      try {
+        // Handle the redirect result (if the user is returning from Google sign-in)
+        const redirectUser = await handleRedirectResult();
+        if (redirectUser) {
+          setUser(redirectUser);
+        }
+
+        // Initialize auth state listener
+        const unsubscribe = initializeAuth((currentUser) => {
+          setUser(currentUser ?? null);
+          setLoading(false);
+        });
+
+        return unsubscribe;
+      } catch (error) {
+        console.error("Error processing authentication:", error);
+        setLoading(false);
+      }
+    };
+
+    processAuth();
   }, []);
 
   if (loading) return null;
 
   return (
-    <UserContext.Provider value={{user, setUser}}>
+    <UserContext.Provider value={{ user, setUser }}>
       <Router>
         <Routes>
           <Route path="/" element={
