@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../App';
-import { loginWithGoogle } from '../auth/Auth.jsx';
+import { loginWithGoogle } from '../auth/Auth';
 
 const Login = () => {
   const { user, setUser } = useContext(UserContext); // Get both user and setter
