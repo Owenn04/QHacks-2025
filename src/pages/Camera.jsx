@@ -7,7 +7,6 @@ import NutritionLogger from '../components/NutritionLogger';
 
 const CameraPage = () => {
   const user = useContext(UserContext);
-  // console.log(user.user.uid)
   const [imageData, setImageData] = useState(null);
   const [analysis, setAnalysis] = useState('');
   const [parsedNutrition, setParsedNutrition] = useState(null);
@@ -81,7 +80,8 @@ const CameraPage = () => {
             },
             {
               type: "text",
-              text: `Analyze this nutrition label and return only these values for ${servings} servings, with just the number (no units): calories in kcal, fat in grams, carbs in grams, protein in grams. Format exactly like this example:
+              text: `Analyze this nutrition label. First, identify what food item this is - if you can find the product name use that, if not describe what type of food it appears to be (e.g. "potato chips", "protein bar", etc). If you can't determine the food type, use "Unknown Food Item". Then provide the nutritional values for ${servings} servings, with just the number (no units): calories in kcal, fat in grams, carbs in grams, protein in grams. Format exactly like this example:
+name: chocolate chip protein bar
 calories: 200
 fat: 10
 carbs: 25

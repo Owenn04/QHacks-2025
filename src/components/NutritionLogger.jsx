@@ -23,6 +23,7 @@ const NutritionLogger = ({ nutritionData, userId, onSuccess, onError }) => {
       
       // Create the log entry with just the fields we want
       const logEntry = {
+        name: nutritionData.name || 'Unknown Food Item',
         calories: nutritionData.calories || '',
         protein: nutritionData.protein || '',
         fat: nutritionData.fat || '',
@@ -56,11 +57,6 @@ const NutritionLogger = ({ nutritionData, userId, onSuccess, onError }) => {
     }
   };
 
-  // Add validation to the render
-  if (!userId) {
-    console.warn('NutritionLogger rendered without userId');
-  }
-
   return (
     <div>
       <button
@@ -68,7 +64,7 @@ const NutritionLogger = ({ nutritionData, userId, onSuccess, onError }) => {
         disabled={!userId}
         className={`w-full ${userId ? 'bg-green-500 hover:bg-green-600' : 'bg-gray-400'} text-white px-4 py-2 rounded-lg font-medium`}
       >
-        Save Nutrition Data
+        Save {nutritionData.name ? nutritionData.name : 'Nutrition Data'}
       </button>
     </div>
   );
