@@ -3,30 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../App';
 import { loginWithGoogle } from '../auth/Auth';
 
-export const handleGoogleLogin = async (setUser, navigate) => {
+export const handleGoogleLogin = async () => {
   try {
-    const loggedInUser = await loginWithGoogle();
-    setUser(loggedInUser);
-    navigate('/');
+    await loginWithGoogle();
   } catch (error) {
-    console.error('Google sign-in failed:', error);
+    console.error("Error during Google login:", error);
+    throw error; // Re-throw the error if you want the caller to handle it
   }
 };
 
 const Login = () => {
-  const { user, setUser } = useContext(UserContext);
-  const navigate = useNavigate();
-
   return (
-    <>
-      {!user ? (
-        <button onClick={() => handleGoogleLogin(setUser, navigate)}>
-          Sign in with Google
-        </button>
-      ) : (
-        <p>You're already logged in.</p>
-      )}
-    </>
+    <div>
+      <h1>Login</h1>
+      <button onClick={handleGoogleLogin}>Sign in with Google</button>
+    </div>
   );
 };
 
