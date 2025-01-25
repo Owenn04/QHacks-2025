@@ -17,7 +17,7 @@ const AddButtons = () => {
 
       <button
         onClick={() => navigate('/addMeal')}
-        className="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full transition-colors shadow-sm"
+        className="flex items-center justify-center gap-2 pt-3 border border-orange-400 bg-white hover:bg-green-600 text-orange-400 px-6 py-3 rounded-full transition-colors shadow-sm"
       >
         <Plus size={20} />
         <span className="font-medium">ADD</span>

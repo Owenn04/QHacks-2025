@@ -28,7 +28,7 @@ const HistoryItem = ({ item }) => {
       </div>
 
       {isExpanded && (
-        <div className="px-4 pb-4 text-sm text-gray-600 border-t">
+        <div className="px-4 pb-4 text-sm text-gray-600 border-t border-orange-400">
           <div className="pt-3 space-y-1">
             <p>Protein: {item.protein}g</p>
             <p>Carbs: {item.carbs}g</p>
