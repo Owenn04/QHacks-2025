@@ -19,17 +19,21 @@ export const UserContext = createContext(null);
 
 function App() {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = initializeAuth((currentUser) => {
       setUser(currentUser ?? null);
+      setLoading(false);
     });
   
     return unsubscribe;
   }, []);
 
+  if (loading) return null;
+
   return (
-    <UserContext.Provider value={user}>
+    <UserContext.Provider value={{user, setUser}}>
       <Router>
         <Routes>
           <Route path="/" element={
