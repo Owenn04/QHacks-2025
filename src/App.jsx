@@ -3,7 +3,6 @@ import { useState, createContext } from 'react';
 
 import Home from './pages/Home.jsx';
 import Camera from './pages/Camera.jsx';
-import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import AddMeal from './pages/AddMeal.jsx';
 import Tracker from './pages/Tracker.jsx';
@@ -60,7 +59,6 @@ function App() {
             </ProtectedRoute>
           } />
           <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/welcome" element={<Welcome />} />
         </Routes>
       </Router>
