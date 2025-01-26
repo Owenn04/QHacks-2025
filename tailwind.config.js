@@ -6,14 +6,15 @@ export default {
     ],
     theme: {
       screens: {
-        mobile: '414px',
-      },
-      minHeight: {
-        screen: '896px',
-      },
-      width: {
-        screen: '414px',
-      },
+         mobile: { max: '767px' },
+         desktop: { min: '768px' },
+        },
+      // minHeight: {
+      //   screen: '896px',
+      // },
+      // width: {
+      //   screen: '414px',
+      // },
       extend: {
         colors: {
           orange: {

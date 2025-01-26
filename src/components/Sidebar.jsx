@@ -36,9 +36,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       <div className="absolute inset-0 bg-black/50" onClick={handleClose} />
       
       <div
-        className={`absolute right-0 top-0 h-full w-3/4 sm:w-3/4 bg-white transform transition-transform duration-300 ${
-          isOpen && !isClosing ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`absolute right-0 top-0 h-full bg-white transform transition-transform duration-300 w-3/4 
+          ${isOpen && !isClosing ? 'translate-x-0' : 'translate-x-full'} 
+          md:!w-1/3`}
       >
         <div className="p-4 flex justify-end">
           <button 
@@ -58,7 +58,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             <Link 
               key={item.path}
               to={item.path}
-              className="block py-4 px-2 text-gray-800 text-lg font-medium font-serif border-b border-gray-200 active:bg-orange-300 active:text-white transition-colors duration-200"
+              className="block py-4 px-2 text-gray-800 text-lg font-medium font-serif border-b border-gray-200 hover:bg-orange-100 active:bg-orange-300 active:text-white transition-colors duration-200"
               onClick={handleClose}
             >
               {item.title}
