@@ -164,7 +164,7 @@ function TrackerPage() {
           <div className="mb-4">
             <select
               id="stat"
-              className="mt-1 block w-full p-2 border border-orange-400 rounded-lg hover:border-orange-500 hover:bg-orange-50 transition-colors duration-200"
+              className="mt-1 block w-full p-2 border border-orange-300 rounded-lg hover:border-orange-500 hover:bg-orange-50 transition-colors duration-200"
               value={selectedStat}
               onChange={(e) => setSelectedStat(e.target.value)}
             >
@@ -218,7 +218,7 @@ function TrackerPage() {
         {error && <p className="text-red-500 text-sm">{error}</p>}
         <ul className="space-y-3">
           {foodLogs.map((log) => (
-            <li key={log.id} className="p-4 border border-orange-400 rounded-lg bg-white shadow-sm">
+            <li key={log.id} className="p-4 border border-orange-300 rounded-lg bg-white shadow-sm">
               <p className="font-medium">{log.name}</p>
               <p className="text-sm text-gray-500">
                 {new Date(log.timestamp).toLocaleString()} {/* Parse ISO string to display */}
