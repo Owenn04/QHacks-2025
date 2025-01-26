@@ -42,11 +42,12 @@ function Welcome() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-center overflow-hidden relative">
+    <div className="min-h-screen bg-offwhite flex flex-col items-center justify-center overflow-hidden relative">
       {/* Abstract orange circles */}
-      <div className="absolute top-0 left-0 w-64 h-64 bg-orange-200 rounded-full transform -translate-x-1/2 -translate-y-1/2 opacity-50 sm:w-80 sm:h-80"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange-300 rounded-full transform translate-x-1/2 translate-y-1/2 opacity-50 sm:w-64 sm:h-64"></div>
-
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 left-0 w-64 h-64 bg-orange-200 rounded-full transform -translate-x-1/2 -translate-y-1/2 opacity-50 sm:w-80 sm:h-80"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange-300 rounded-full transform translate-x-1/2 translate-y-1/2 opacity-50 sm:w-64 sm:h-64"></div>
+      </div>
       {/* Content */}
       <div className="relative z-10 text-center px-4 w-full max-w-md">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-gray-900">
