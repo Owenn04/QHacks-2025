@@ -2,25 +2,27 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword
 } from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
 export const registerUser = async (email, password) => {
   try {
-    // Create auth user with email (using username as email)
+    // Create auth user with email
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
     // Create user document in Firestore
     await setDoc(doc(db, 'users', user.uid), {
       email,
+      displayName,
       createdAt: new Date().toISOString(),
       // Add any additional user fields you want to store
     });
 
     return {
       uid: user.uid,
-      email
+      email,
+      displayName
     };
   } catch (error) {
     console.error('Error in registration:', error);
@@ -41,10 +43,22 @@ export const loginUser = async (email, password) => {
     return {
       uid: user.uid,
       username: userData.email,
+      displayName: userData.displayName,
       // Add any other user data you want to return
     };
   } catch (error) {
     console.error('Error in login:', error);
+    throw error;
+  }
+};
+
+export const updateDisplayName = async (uid, displayName) => {
+  try {
+    await updateDoc(doc(db, 'users', uid), {
+      displayName
+    });
+  } catch (error) {
+    console.error('Error updating display name:', error);
     throw error;
   }
 };
