@@ -57,7 +57,7 @@ const GoalLogger = ({ goalData, userId, onSuccess, onError }) => {
       <button
         onClick={logGoals}
         disabled={!userId}
-        className={`w-full ${userId ? 'bg-green-500 hover:bg-green-600' : 'bg-gray-400'} text-white px-4 py-2 rounded-lg font-medium`}
+        className={`w-full ${userId ? 'bg-orange-500 hover:bg-orange-600' : 'bg-gray-400'} text-white px-4 py-2 rounded-lg font-medium`}
       >
         Save Goals
       </button>
