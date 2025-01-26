@@ -170,54 +170,59 @@ protein: [number]`
   return (
     <div className="min-h-screen bg-offwhite overflow-hidden relative">
       {/* Abstract Shapes */}
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-200 rounded-full transform -translate-x-1/2 -translate-y-1/2 opacity-50 sm:w-80 sm:h-80 z-0"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange-300 rounded-full transform translate-x-1/2 translate-y-1/2 opacity-50 sm:w-64 sm:h-64 z-0"></div>
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-200 rounded-full transform -translate-x-1/2 -translate-y-1/2 opacity-50 sm:w-80 sm:h-80"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange-300 rounded-full transform translate-x-1/2 translate-y-1/2 opacity-50 sm:w-64 sm:h-64"></div>
+      </div>
 
-      <Header />
-      <div className="p-6">
-        <h1 className="text-2xl font-semibold mb-6">Scan Label</h1>
+      {/* Main Content */}
+      <div className="relative z-10">
+        <Header />
+        <div className="p-6">
+          <h1 className="text-2xl font-semibold mb-6">Scan Label</h1>
 
-        <div className="space-y-4">
-          <div className="bg-white rounded-xl p-4 shadow-sm">
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Number of Servings
-              </label>
-              <input
-                type="text"
-                value={servings}
-                onChange={handleServingsChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-              />
-            </div>
-            <button 
-              onClick={captureImage}
-              className="w-full bg-orange-400 text-white px-4 py-3 rounded-lg font-medium flex items-center justify-center"
-            >
-              <Camera className="mr-2" size={24} />
-              Take Photo
-            </button>
-            {showUpload && 
-              <p className="text-sm text-gray-500 mt-2 text-center">Image uploaded!</p>
-            }
-          </div>
-
-          {analysis && (
-            <div className="space-y-4">
-              <div className="bg-white rounded-xl p-4 shadow-sm">
-                <div className="text-gray-600 whitespace-pre-wrap">{analysis}</div>
-              </div>
-              
-              {parsedNutrition && user && (
-                <NutritionLogger
-                  nutritionData={parsedNutrition}
-                  userId={user.user.uid}
-                  onSuccess={handleLogSuccess}
-                  onError={handleLogError}
+          <div className="space-y-4">
+            <div className="bg-white rounded-xl p-4 shadow-sm">
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Number of Servings
+                </label>
+                <input
+                  type="text"
+                  value={servings}
+                  onChange={handleServingsChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg"
                 />
-              )}
+              </div>
+              <button 
+                onClick={captureImage}
+                className="w-full bg-orange-400 text-white px-4 py-3 rounded-lg font-medium flex items-center justify-center"
+              >
+                <Camera className="mr-2" size={24} />
+                Take Photo
+              </button>
+              {showUpload && 
+                <p className="text-sm text-gray-500 mt-2 text-center">Image uploaded!</p>
+              }
             </div>
-          )}
+
+            {analysis && (
+              <div className="space-y-4">
+                <div className="bg-white rounded-xl p-4 shadow-sm">
+                  <div className="text-gray-600 whitespace-pre-wrap">{analysis}</div>
+                </div>
+                
+                {parsedNutrition && user && (
+                  <NutritionLogger
+                    nutritionData={parsedNutrition}
+                    userId={user.user.uid}
+                    onSuccess={handleLogSuccess}
+                    onError={handleLogError}
+                  />
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
