@@ -97,7 +97,11 @@ function AddMeal() {
   };
 
   return (
-    <div className="min-h-screen bg-offwhite">
+    <div className="min-h-screen bg-offwhite overflow-hidden relative">
+      {/* Abstract Shapes */}
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-200 rounded-full transform -translate-x-1/2 -translate-y-1/2 opacity-50 sm:w-80 sm:h-80"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange-300 rounded-full transform translate-x-1/2 translate-y-1/2 opacity-50 sm:w-64 sm:h-64"></div>
+
       <Header />
       <div className="p-4">
         <h1 className="text-2xl font-semibold mb-4">Search Food</h1>

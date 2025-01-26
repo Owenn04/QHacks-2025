@@ -27,7 +27,7 @@ function Welcome() {
           An Easy Way to Eat Healthy
         </h1>
         <p className="text-lg sm:text-xl mb-8 text-gray-700">
-        Lorem ipsum odor amet, consectetuer adipiscing elit. Quisque vivamus tempus metus, consequat eu molestie netus. Curae mi lorem platea dis ridiculus felis. Rhoncus senectus ante curae hac vivamus dis hendrerit nunc. Congue sociosqu consectetur lacus facilisi, curae ornare scelerisque. Pulvinar nisl efficitur etiam quisque quam viverra congue fusce. Proin ultricies eros faucibus maecenas platea facilisi malesuada sapien. Quis dis himenaeos varius lectus ante lectus; etiam nullam. Sem iaculis sit maximus fames finibus tincidunt.
+        Nutrasense is the ultimate tool for taking control of your nutrition and reaching your health goals. Easily set your daily caloric goals, log your meals, or scan the nutritional information on food packages with just a few taps. With Nutrasense, tracking your intake is fast, simple, and personalized. Let's make your nutrition journey easier and more intuitive—one meal at a time!
         </p>
         {!user ? (
           <button
