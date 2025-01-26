@@ -5,22 +5,22 @@ import {
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
-export const registerUser = async (username, password) => {
+export const registerUser = async (email, password) => {
   try {
     // Create auth user with email (using username as email)
-    const userCredential = await createUserWithEmailAndPassword(auth, `${username}@yourdomain.com`, password);
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
     // Create user document in Firestore
     await setDoc(doc(db, 'users', user.uid), {
-      username,
+      email,
       createdAt: new Date().toISOString(),
       // Add any additional user fields you want to store
     });
 
     return {
       uid: user.uid,
-      username
+      email
     };
   } catch (error) {
     console.error('Error in registration:', error);
@@ -28,10 +28,10 @@ export const registerUser = async (username, password) => {
   }
 };
 
-export const loginUser = async (username, password) => {
+export const loginUser = async (email, password) => {
   try {
     // Sign in with email (username@yourdomain.com) and password
-    const userCredential = await signInWithEmailAndPassword(auth, `${username}@yourdomain.com`, password);
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
     // Get user data from Firestore
@@ -40,7 +40,7 @@ export const loginUser = async (username, password) => {
 
     return {
       uid: user.uid,
-      username: userData.username,
+      username: userData.email,
       // Add any other user data you want to return
     };
   } catch (error) {

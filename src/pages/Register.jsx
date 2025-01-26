@@ -6,7 +6,7 @@ import { registerUser } from '../auth/Auth';
 function Register() {
   const { setUser } = useContext(UserContext);
   const [credentials, setCredentials] = useState({
-    username: '',
+    email: '',
     password: ''
   });
   const [error, setError] = useState(null);
@@ -27,11 +27,11 @@ function Register() {
     setError(null);
 
     try {
-      const userData = await registerUser(credentials.username, credentials.password);
+      const userData = await registerUser(credentials.email, credentials.password);
       setUser(userData);
       navigate('/');
     } catch (error) {
-      setError('Registration failed. Username might be taken or invalid.');
+      setError('Registration failed. Email might be taken or invalid.');
     } finally {
       setIsLoading(false);
     }
@@ -66,10 +66,10 @@ function Register() {
           <div className="space-y-2">
             <input
               type="text"
-              name="username"
-              value={credentials.username}
+              name="email"
+              value={credentials.email}
               onChange={handleInputChange}
-              placeholder="Choose a username"
+              placeholder="Enter your email"
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition duration-200"
               disabled={isLoading}
             />

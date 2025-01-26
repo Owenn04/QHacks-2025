@@ -6,7 +6,7 @@ import { loginUser } from '../auth/Auth';
 function Welcome() {
   const { setUser } = useContext(UserContext);
   const [credentials, setCredentials] = useState({
-    username: '',
+    email: '',
     password: ''
   });
   const [error, setError] = useState(null);
@@ -27,11 +27,11 @@ function Welcome() {
     setError(null);
 
     try {
-      const userData = await loginUser(credentials.username, credentials.password);
+      const userData = await loginUser(credentials.email, credentials.password);
       setUser(userData);
       navigate('/');
     } catch (error) {
-      setError('Invalid username or password. Please try again.');
+      setError('Invalid email or password. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -66,10 +66,10 @@ function Welcome() {
           <div className="space-y-2">
             <input
               type="text"
-              name="username"
-              value={credentials.username}
+              name="email"
+              value={credentials.email}
               onChange={handleInputChange}
-              placeholder="Username"
+              placeholder="email"
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition duration-200"
               disabled={isLoading}
             />
