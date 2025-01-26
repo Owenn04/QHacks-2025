@@ -14,6 +14,23 @@ const CameraPage = () => {
   const [servings, setServings] = useState(1);
   const [shouldAnalyze, setShouldAnalyze] = useState(false);
   
+  const handleServingsChange = (e) => {
+    const { value } = e.target;
+    
+    // If the value is empty, allow it (so user can clear the input)
+    if (value === '') {
+      setServings('');
+      return;
+    }
+
+    // Only update if the input is a valid number
+    const numValue = value.replace(/[^0-9]/g, '');
+    if (numValue) {
+      const number = Number(numValue);
+      // Ensure at least 1 serving
+      setServings(number === 0 ? 1 : number);
+    }
+  };
 
   const parseNutritionResponse = (text) => {
     const lines = text.toLowerCase().split('\n');
@@ -151,7 +168,11 @@ protein: [number]`
   };
 
   return (
-    <div className="min-h-screen bg-offwhite">
+    <div className="min-h-screen bg-offwhite overflow-hidden relative">
+      {/* Abstract Shapes */}
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-200 rounded-full transform -translate-x-1/2 -translate-y-1/2 opacity-50 sm:w-80 sm:h-80 z-0"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange-300 rounded-full transform translate-x-1/2 translate-y-1/2 opacity-50 sm:w-64 sm:h-64 z-0"></div>
+
       <Header />
       <div className="p-6">
         <h1 className="text-2xl font-semibold mb-6">Scan Label</h1>
@@ -164,9 +185,8 @@ protein: [number]`
               </label>
               <input
                 type="text"
-                min="1"
                 value={servings}
-                onChange={(e) => setServings(Number(e.target.value))}
+                onChange={handleServingsChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg"
               />
             </div>

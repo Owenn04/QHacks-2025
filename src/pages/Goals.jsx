@@ -44,10 +44,24 @@ const Goals = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setGoals(prev => ({
-      ...prev,
-      [name]: Number(value)
-    }));
+    
+    // If the value is empty, allow it (so user can clear the input)
+    if (value === '') {
+      setGoals(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+      return;
+    }
+
+    // Only update if the input is a valid number
+    const numValue = value.replace(/[^0-9]/g, '');
+    if (numValue) {
+      setGoals(prev => ({
+        ...prev,
+        [name]: Number(numValue)
+      }));
+    }
   };
 
   const handleSuccess = () => {
@@ -79,8 +93,6 @@ const Goals = () => {
                     value={goals.calories}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-orange-400 rounded-lg text-lg"
-                    min="0"
-                    step="50"
                   />
                   <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">
                     kcal
@@ -103,7 +115,6 @@ const Goals = () => {
                         value={goals.protein}
                         onChange={handleChange}
                         className="w-full px-4 py-2 border border-orange-400 rounded-lg"
-                        min="0"
                       />
                       <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">g</span>
                     </div>
@@ -120,7 +131,6 @@ const Goals = () => {
                         value={goals.carbs}
                         onChange={handleChange}
                         className="w-full px-4 py-2 border border-orange-400 rounded-lg"
-                        min="0"
                       />
                       <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">g</span>
                     </div>
@@ -137,7 +147,6 @@ const Goals = () => {
                         value={goals.fat}
                         onChange={handleChange}
                         className="w-full px-4 py-2 border border-orange-400 rounded-lg"
-                        min="0"
                       />
                       <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">g</span>
                     </div>
