@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useState, createContext } from 'react';
+import { useState, useEffect, createContext } from 'react';
+import { auth } from './firebase';
 
 import Home from './pages/Home.jsx';
 import Camera from './pages/Camera.jsx';
@@ -18,7 +19,24 @@ export const UserContext = createContext(null);
 
 function App() {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // Check authentication state on app load
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
+      if (firebaseUser) {
+        // User is signed in
+        setUser(firebaseUser);
+      } else {
+        // User is signed out
+        setUser(null);
+      }
+      setLoading(false); // Set loading to false after checking auth state
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
