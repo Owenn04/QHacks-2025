@@ -12,6 +12,7 @@ function AddMeal() {
   const [error, setError] = useState("");
   const [selectedFood, setSelectedFood] = useState(null);
   const [servings, setServings] = useState(1);
+  const [itemAdded, setItemAdded] = useState(false);
   const user = useContext(UserContext);
 
   const fetchResults = async () => {
@@ -82,8 +83,16 @@ function AddMeal() {
         timestamp: new Date().toISOString(),
       });
 
-      setSelectedFood(null);
-      setServings(1);
+      setItemAdded(true);
+
+      setTimeout(() => {
+        setSelectedFood(null);
+        setServings(1);
+        setItemAdded(false);
+        // Also clear the results to prevent re-selecting
+        setResults([]);
+        setQuery('');
+      }, 1000);
     } catch (error) {
       console.error("Error logging food item:", error);
     }

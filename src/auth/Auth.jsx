@@ -1,54 +1,63 @@
-import { onAuthStateChanged, signInWithRedirect, GoogleAuthProvider, getRedirectResult } from 'firebase/auth';
-import { doc, setDoc, getDoc, collection, getFirestore } from 'firebase/firestore'; 
+import { 
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
+} from 'firebase/auth';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
-const provider = new GoogleAuthProvider();
-
-export const getCurrentUser = () => auth.currentUser;
-
-export const initializeAuth = (callback) => {
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const userDocRef = doc(db, "users", user.uid);
-        const userDoc = await getDoc(userDocRef);
-
-        // Only create a new document if the user doesn't already exist
-        if (!userDoc.exists()) {
-          await setDoc(userDocRef, {
-            email: user.email,
-            name: user.displayName,
-            createdAt: new Date()
-          });
-        }
-
-        callback?.(user);
-      } else {
-        callback?.(null);
-      }
-    });
-};
-
-export const loginWithGoogle = async () => {
+export const registerUser = async (username, password) => {
   try {
-    // Initiate the redirect sign-in
-    await signInWithRedirect(auth, provider);
+    // Create auth user with email (using username as email)
+    const userCredential = await createUserWithEmailAndPassword(auth, `${username}@yourdomain.com`, password);
+    const user = userCredential.user;
+
+    // Create user document in Firestore
+    await setDoc(doc(db, 'users', user.uid), {
+      username,
+      createdAt: new Date().toISOString(),
+      // Add any additional user fields you want to store
+    });
+
+    return {
+      uid: user.uid,
+      username
+    };
   } catch (error) {
-    console.error("Login failed:", error);
+    console.error('Error in registration:', error);
     throw error;
   }
 };
 
-// Handle the redirect result after the user is redirected back to your app
-export const handleRedirectResult = async () => {
+export const loginUser = async (username, password) => {
   try {
-    const result = await getRedirectResult(auth);
-    if (result) {
-      // User is signed in, return the user object
-      console.log("redirect result: ", result)
-      return result.user;
-    }
+    // Sign in with email (username@yourdomain.com) and password
+    const userCredential = await signInWithEmailAndPassword(auth, `${username}@yourdomain.com`, password);
+    const user = userCredential.user;
+
+    // Get user data from Firestore
+    const userDoc = await getDoc(doc(db, 'users', user.uid));
+    const userData = userDoc.data();
+
+    return {
+      uid: user.uid,
+      username: userData.username,
+      // Add any other user data you want to return
+    };
   } catch (error) {
-    console.error("Error handling redirect result:", error);
+    console.error('Error in login:', error);
+    throw error;
+  }
+};
+
+export const getCurrentUser = () => {
+  return auth.currentUser;
+};
+
+export const signOutUser = async () => {
+  try {
+    await auth.signOut();
+  } catch (error) {
+    console.error('Error signing out:', error);
     throw error;
   }
 };

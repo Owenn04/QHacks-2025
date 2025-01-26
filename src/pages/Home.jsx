@@ -49,11 +49,8 @@ function Home() {
           where('timestamp', '<', `${startOfDayISO}T23:59:59.999Z`),
           orderBy('timestamp', 'desc')
         );
-
-        console.log('Fetching items from:', startOfDayISO);
         
         const querySnapshot = await getDocs(q);
-        console.log('Query returned:', querySnapshot.size, 'items');
 
         // Calculate totals and store items
         const totals = {
@@ -66,10 +63,10 @@ function Home() {
         const items = querySnapshot.docs.map((doc) => {
           const data = doc.data();
           
-          // Safely parse string values to floats
+          // Safely parse string values to floats and round them
           const safeParseFloat = (val) => {
             const parsed = parseFloat(val);
-            return isNaN(parsed) ? 0 : parsed;
+            return isNaN(parsed) ? 0 : Math.round(parsed);
           };
 
           // Add macros using safeParseFloat
@@ -78,6 +75,7 @@ function Home() {
           totals.carbs += safeParseFloat(data.carbs);
           totals.fat += safeParseFloat(data.fat);
           
+          // Round the values for individual items as well
           return {
             ...data,
             calories: safeParseFloat(data.calories),
@@ -87,9 +85,16 @@ function Home() {
           };
         });
 
-        console.log('Final totals:', totals);
+        // Round the final totals
+        const roundedTotals = {
+          calories: Math.round(totals.calories),
+          protein: Math.round(totals.protein),
+          carbs: Math.round(totals.carbs),
+          fat: Math.round(totals.fat)
+        };
+
         setTodayItems(items);
-        setTodayTotals(totals);
+        setTodayTotals(roundedTotals);
         setIsLoading(false);
 
       } catch (error) {
@@ -113,17 +118,17 @@ function Home() {
           <>
             <div className="mb-8">
               <MacroCircle 
-                calories={todayTotals.calories}
-                goal={goals.calories}
+                calories={Math.round(todayTotals.calories)}
+                goal={Math.round(goals.calories)}
                 type="Calories Consumed"
                 color="border-orange-400"
               />
             </div>
     
             <div className="space-y-4 mb-8">
-              <MacroBar current={todayTotals.carbs} total={goals.carbs} type="Carbs" />
-              <MacroBar current={todayTotals.protein} total={goals.protein} type="Protein" />
-              <MacroBar current={todayTotals.fat} total={goals.fat} type="Fat" />
+              <MacroBar current={Math.round(todayTotals.carbs)} total={Math.round(goals.carbs)} type="Carbs" />
+              <MacroBar current={Math.round(todayTotals.protein)} total={Math.round(goals.protein)} type="Protein" />
+              <MacroBar current={Math.round(todayTotals.fat)} total={Math.round(goals.fat)} type="Fat" />
             </div>
 
             <AddButtons />

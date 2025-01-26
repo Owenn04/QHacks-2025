@@ -13,6 +13,7 @@ const CameraPage = () => {
   const [showUpload, setShowUpload] = useState(false);
   const [servings, setServings] = useState(1);
   const [shouldAnalyze, setShouldAnalyze] = useState(false);
+  
 
   const parseNutritionResponse = (text) => {
     const lines = text.toLowerCase().split('\n');
