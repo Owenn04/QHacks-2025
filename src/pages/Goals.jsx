@@ -75,8 +75,12 @@ const Goals = () => {
   return (
     <div className="min-h-screen bg-offwhite">
       <Header />
+      <div className="fixed inset-0 pointer-events-none z-[-50]">
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-200 rounded-full transform -translate-x-1/2 -translate-y-1/2 opacity-50 sm:w-80 sm:h-80"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange-300 rounded-full transform translate-x-1/2 translate-y-1/2 opacity-50 sm:w-64 sm:h-64"></div>
+      </div>
       <div className="p-6">
-        <h1 className="text-2xl font-semibold mb-6">Daily Goals</h1>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold mb-6">Daily Goals</h1>
 
         <div className="space-y-6">
           {isLoading ? (
@@ -92,7 +96,7 @@ const Goals = () => {
                     name="calories"
                     value={goals.calories}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-orange-400 rounded-lg text-lg"
+                    className="w-full px-4 py-3 border border-orange-300 rounded-lg text-lg"
                   />
                   <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">
                     kcal
@@ -114,7 +118,7 @@ const Goals = () => {
                         name="protein"
                         value={goals.protein}
                         onChange={handleChange}
-                        className="w-full px-4 py-2 border border-orange-400 rounded-lg"
+                        className="w-full px-4 py-2 border border-orange-300 rounded-lg"
                       />
                       <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">g</span>
                     </div>
@@ -130,7 +134,7 @@ const Goals = () => {
                         name="carbs"
                         value={goals.carbs}
                         onChange={handleChange}
-                        className="w-full px-4 py-2 border border-orange-400 rounded-lg"
+                        className="w-full px-4 py-2 border border-orange-300 rounded-lg"
                       />
                       <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">g</span>
                     </div>
@@ -146,7 +150,7 @@ const Goals = () => {
                         name="fat"
                         value={goals.fat}
                         onChange={handleChange}
-                        className="w-full px-4 py-2 border border-orange-400 rounded-lg"
+                        className="w-full px-4 py-2 border border-orange-300 rounded-lg"
                       />
                       <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">g</span>
                     </div>

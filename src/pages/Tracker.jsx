@@ -135,8 +135,12 @@ function TrackerPage() {
   return (
     <div className="min-h-screen bg-offwhite">
       <Header />
+      <div className="fixed inset-0 pointer-events-none z-[-50]">
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-200 rounded-full transform -translate-x-1/2 -translate-y-1/2 opacity-50 sm:w-80 sm:h-80"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange-300 rounded-full transform translate-x-1/2 translate-y-1/2 opacity-50 sm:w-64 sm:h-64"></div>
+      </div>
       <div className="p-4">
-        <h1 className="text-2xl font-semibold mb-4">Food Tracker</h1>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold mb-4">History</h1>
 
         {/* Timeframe Selector */}
         <div className="mb-4">
@@ -145,7 +149,7 @@ function TrackerPage() {
           </label>
           <select
             id="timeframe"
-            className="mt-1 block w-full p-2 border border-orange-400 rounded-lg hover:border-orange-500 hover:bg-orange-50 transition-colors duration-200"
+            className="mt-1 block w-full p-2 border border-gray-700 rounded-lg hover:border-orange-300 hover:bg-orange-50 transition-colors duration-200"
             value={timeframe}
             onChange={(e) => setTimeframe(e.target.value)}
           >
@@ -199,7 +203,7 @@ function TrackerPage() {
         )}
 
         {/* Totals */}
-        <div className="mb-4 p-4 bg-orange-400 rounded-lg shadow-sm">
+        <div className="mb-4 p-4 bg-orange-300 rounded-lg shadow-sm">
           <h2 className="text-lg text-white font-semibold mb-2">Totals</h2>
           <ul className="space-y-1">
             <li className="text-sm text-white">Calories: {calculateTotals().calories.toFixed(2)} / {goals.calories} kcal</li>

@@ -117,7 +117,7 @@ function AddMeal() {
       <div className="relative z-10">
         <Header />
         <div className="p-4">
-          <h1 className="text-2xl font-semibold mb-4">Search Food</h1>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold mb-4">Search Food</h1>
           <form onSubmit={handleSearch} className="mb-4">
             <input
               type="text"
@@ -128,7 +128,7 @@ function AddMeal() {
             />
             <button
               type="submit"
-              className="mt-2 w-full py-3 bg-orange-400 text-white rounded-lg"
+              className="mt-2 w-full py-3 bg-orange-300 hover:bg-orange-300 active:bg-orange-400 text-white rounded-lg"
             >
               Search
             </button>

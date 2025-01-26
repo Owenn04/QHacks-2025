@@ -179,7 +179,7 @@ protein: [number]`
       <div className="relative z-10">
         <Header />
         <div className="p-6">
-          <h1 className="text-2xl font-semibold mb-6">Scan Label</h1>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold mb-6">Scan Label</h1>
 
           <div className="space-y-4">
             <div className="bg-white rounded-xl p-4 shadow-sm">
@@ -196,7 +196,7 @@ protein: [number]`
               </div>
               <button 
                 onClick={captureImage}
-                className="w-full bg-orange-400 text-white px-4 py-3 rounded-lg font-medium flex items-center justify-center"
+                className="w-full bg-orange-300 hover:bg-orange-300 active:bg-orange-400 text-white px-4 py-3 rounded-lg font-medium flex items-center justify-center"
               >
                 <Camera className="mr-2" size={24} />
                 Take Photo

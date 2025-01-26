@@ -43,7 +43,7 @@ export const loginUser = async (email, password) => {
     return {
       uid: user.uid,
       username: userData.email,
-      displayName: userData.displayName,
+      displayName: userData.displayName || '',
       // Add any other user data you want to return
     };
   } catch (error) {

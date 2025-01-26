@@ -44,8 +44,12 @@ function Profile() {
   return (
     <div className="min-h-screen bg-offwhite">
       <Header />
+      <div className="fixed inset-0 pointer-events-none z-[-50]">
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-200 rounded-full transform -translate-x-1/2 -translate-y-1/2 opacity-50 sm:w-80 sm:h-80"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange-300 rounded-full transform translate-x-1/2 translate-y-1/2 opacity-50 sm:w-64 sm:h-64"></div>
+      </div>
       <div className="p-6">
-        <h1 className="text-2xl font-semibold mb-6">Profile</h1>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold mb-6">Profile</h1>
         
         {user ? (
           <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
@@ -86,7 +90,7 @@ function Profile() {
 
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="w-full bg-white-500 text-black py-2 rounded-lg hover:bg-orange-100 active:bg-orange-100 transition-colors duration-300"
+                className="border w-full bg-white-500 text-black py-2 rounded-lg hover:bg-orange-100 active:bg-orange-100 transition-colors duration-300"
               >
                 Update Display Name
               </button>
@@ -114,7 +118,7 @@ function Profile() {
 
       {/* Modal for updating display name */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-md">
             <h2 className="text-xl font-semibold mb-4">Update Display Name</h2>
             <form onSubmit={handleUpdateDisplayName} className="space-y-4">

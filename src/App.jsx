@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState, useEffect, createContext } from 'react';
-import { auth } from './firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from './firebase'
 
 import Home from './pages/Home.jsx';
 import Camera from './pages/Camera.jsx';
@@ -22,19 +24,46 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   // Check authentication state on app load
+  // useEffect(() => {
+  //   const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
+  //     if (firebaseUser) {
+  //       // User is signed in
+  //       setUser(firebaseUser);
+  //     } else {
+  //       // User is signed out
+  //       setUser(null);
+  //     }
+  //     setLoading(false); // Set loading to false after checking auth state
+  //   });
+
+  //   // Cleanup subscription on unmount
+  //   return () => unsubscribe();
+  // }, []);
+
+  // Check authentication state on app load
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        // User is signed in
-        setUser(firebaseUser);
+        try {
+          const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
+          const userData = userDoc.data();
+          
+          setUser({
+            uid: firebaseUser.uid,
+            email: firebaseUser.email,
+            displayName: userData?.displayName || '',
+            // Add other relevant user data from Firestore if needed
+          });
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+          setUser(null);
+        }
       } else {
-        // User is signed out
         setUser(null);
       }
-      setLoading(false); // Set loading to false after checking auth state
+      setLoading(false);
     });
 
-    // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
 

@@ -109,8 +109,13 @@ function Home() {
   return (
     <div className="min-h-screen bg-offwhite">
       <Header />
+      <div className="fixed inset-0 pointer-events-none z-[-50]">
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-200 rounded-full transform -translate-x-1/2 -translate-y-1/2 opacity-50 sm:w-80 sm:h-80"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange-300 rounded-full transform translate-x-1/2 translate-y-1/2 opacity-50 sm:w-64 sm:h-64"></div>
+      </div>
+
       <div className="p-6">
-        <h1 className="text-2xl font-semibold mb-6">Today</h1>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold mb-6">Today</h1>
         
         {isLoading ? (
           <div className="text-center text-gray-500">Loading your progress...</div>
